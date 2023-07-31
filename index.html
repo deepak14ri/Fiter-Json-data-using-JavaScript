@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filtered Data</title>
+    <style>
+      input {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin-bottom: 15px;
+      }
+      div {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="searchInput" placeholder="Search here.." />
+      <div id="filteredData"></div>
+    </div>
+
+    <script>
+      const data = [
+        { Id: 1, Name: "Deepak Chaudhari", Age: 28 },
+        { Id: 2, Name: "Vivek Gupta", Age: 26 },
+        { Id: 3, Name: "Aarti Kumawat", Age: 32 }
+      ];
+
+      function renderData(filteredField) {
+        const filteredDataContainer = document.getElementById("filteredData");
+        filteredDataContainer.innerHTML = "";
+
+        filteredField.forEach((item) => {
+          const div = document.createElement("div");
+          div.innerHTML = `<p>Name: ${item.Name}</p><p>Age: ${item.Age}</p>`;
+          filteredDataContainer.appendChild(div);
+        });
+      }
+
+      function handleSearch() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const filteredResult = data.filter((item) => {
+          const filterByName = item.Name.toLowerCase();
+          const filterByAge = item.Age.toString();
+          return (
+            filterByName.includes(searchTerm) ||
+            filterByAge.includes(searchTerm)
+          );
+        });
+        renderData(filteredResult);
+      }
+
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", handleSearch);
+      // Initial render with all data
+      renderData(data);
+    </script>
+  </body>
+</html>
